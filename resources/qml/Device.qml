@@ -25,6 +25,7 @@ Page {
         onServicesScanDone: {
             spinner.visible = false
             footer.text = serviceFound ? serviceFoundText : serviceNotFoundText
+            bleController.serviceConnect()
         }
         onConnected: {
             footer.text = connectionSuccessText
@@ -39,6 +40,15 @@ Page {
         onDiscoveringStarted: {
             footer.text = discoveringText
             spinner.visible = true
+        }
+        onServiceObjectCreationSuccess: {
+            console.log("podlaczono do serwisu")
+        }
+        onServiceObjectCreationFailure: {
+            console.log("nie udalo sie podlaczyc do serwisu")
+        }
+        onCharacteristicChanged: {
+            console.log(value)
         }
     }
 
@@ -64,11 +74,9 @@ Page {
                     Layout.fillHeight: true
                     width: 50
                     color: Qt.rgba(0,0,0,0)
-                    Label {
+                    Image {
                         anchors.centerIn: parent
-                        text: "\u25c0"
-                        font.pointSize: 14
-                        color: whiteColor
+                        source: "../images/arrow.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -92,11 +100,9 @@ Page {
                     Layout.fillHeight: true
                     width: 50
                     color: Qt.rgba(0,0,0,0)
-                    Label {
+                    Image {
                         anchors.centerIn: parent
-                        text: "\u2630"
-                        font.pointSize: 14
-                        color: whiteColor
+                        source: "../images/hamburger.png"
                     }
                     MouseArea {
                         anchors.fill: parent

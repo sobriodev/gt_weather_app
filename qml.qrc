@@ -5,5 +5,7 @@
         <file>qtquickcontrols2.conf</file>
         <file>resources/images/spinner.png</file>
         <file>resources/qml/Device.qml</file>
+        <file>resources/images/hamburger.png</file>
+        <file>resources/images/arrow.png</file>
     </qresource>
 </RCC>

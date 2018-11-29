@@ -17,10 +17,14 @@ public:
     virtual ~Controller();
 
     Q_INVOKABLE void deviceConnect(Device *device);
+    Q_INVOKABLE void serviceConnect();
 
 public slots:
     void bleServiceDiscovered(const QBluetoothUuid &gatt);
     void bleServiceScanDone();
+
+    void bleServiceStateChanged(QLowEnergyService::ServiceState service);
+    void bleCharacteristicChanged(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
 signals:
     void error();
@@ -30,10 +34,16 @@ signals:
     void serviceDiscovered(QString service);
     void discoveringStarted();
 
+    void serviceObjectCreationSuccess();
+    void serviceObjectCreationFailure();
+
+    void characteristicChanged(QString value);
+
 private:
     Device device;
     QLowEnergyController *controller;
     QVector<QBluetoothUuid> services;
+    QLowEnergyService *service;
 
 };
 

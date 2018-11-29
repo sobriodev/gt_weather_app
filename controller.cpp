@@ -1,10 +1,12 @@
 #include "controller.h"
+#include <QDebug>
 
-Controller::Controller(QObject *parent) : QObject(parent), controller(nullptr) {}
+Controller::Controller(QObject *parent) : QObject(parent), controller(nullptr), service(nullptr) {}
 
 Controller::~Controller()
 {
     delete controller;
+    delete service;
 }
 
 void Controller::deviceConnect(Device *device)
@@ -36,6 +38,20 @@ void Controller::deviceConnect(Device *device)
     controller->connectToDevice();
 }
 
+void Controller::serviceConnect()
+{
+    delete service;
+    this->service = controller->createServiceObject(QBluetoothUuid(static_cast<uint>(HC08_SERVICE_UUID)));
+    if (service) {
+        emit serviceObjectCreationSuccess();
+        connect(service, &QLowEnergyService::stateChanged, this, &Controller::bleServiceStateChanged);
+        connect(service, &QLowEnergyService::characteristicChanged, this, &Controller::bleCharacteristicChanged);
+        service->discoverDetails();
+    } else {
+        emit serviceObjectCreationFailure();
+    }
+}
+
 void Controller::bleServiceDiscovered(const QBluetoothUuid &gatt)
 {
     services.append(gatt);
@@ -53,4 +69,28 @@ void Controller::bleServiceScanDone()
     emit servicesScanDone(res);
 }
 
+void Controller::bleServiceStateChanged(QLowEnergyService::ServiceState service)
+{
+    switch (service) {
+    case QLowEnergyService::ServiceDiscovered: {
+        const QLowEnergyCharacteristic hrChar = this->service->characteristic(QBluetoothUuid(static_cast<uint>(HC08_CHARACTERICTIC_UUID)));
+        if (!hrChar.isValid()) {
+            break;
+        }
+        QLowEnergyDescriptor descriptor = hrChar.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+        if (descriptor.isValid())
+            this->service->writeDescriptor(descriptor, QByteArray::fromHex("0100"));
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void Controller::bleCharacteristicChanged(const QLowEnergyCharacteristic &c, const QByteArray &value)
+{
+    if (c.uuid() == QBluetoothUuid(static_cast<uint>(HC08_CHARACTERICTIC_UUID))) {
+        emit characteristicChanged(value);
+    }
+}
 
