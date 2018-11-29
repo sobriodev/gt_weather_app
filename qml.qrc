@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>resources/qml/main.qml</file>
+        <file>resources/qml/Scanner.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>resources/images/spinner.png</file>
+        <file>resources/qml/Device.qml</file>
     </qresource>
 </RCC>

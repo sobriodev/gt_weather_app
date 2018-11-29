@@ -1,5 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include "scanner.h"
+#include "device.h"
+#include "controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -7,8 +10,12 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    qmlRegisterType<Device>("app.device", 1, 0, "Device");
+    qmlRegisterType<Scanner>("app.scanner", 1, 0, "Scanner");
+    qmlRegisterType<Controller>("app.controller", 1, 0, "Controller");
+
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/resources/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
 
