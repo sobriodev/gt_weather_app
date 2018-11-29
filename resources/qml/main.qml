@@ -4,7 +4,6 @@ import QtQuick.Controls 2.4
 import app.scanner 1.0
 import app.device 1.0
 
-
 ApplicationWindow {
     id: mainWindow
     visible: true
