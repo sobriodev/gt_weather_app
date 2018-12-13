@@ -16,7 +16,8 @@ SOURCES += \
         main.cpp \
     device.cpp \
     scanner.cpp \
-    controller.cpp
+    controller.cpp \
+    parser.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     device.h \
     scanner.h \
-    controller.h
+    controller.h \
+    parser.h

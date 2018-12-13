@@ -7,5 +7,11 @@
         <file>resources/qml/Device.qml</file>
         <file>resources/images/hamburger.png</file>
         <file>resources/images/arrow.png</file>
+        <file>resources/images/temperature.png</file>
+        <file>resources/images/pressure.png</file>
+        <file>resources/images/humidity.png</file>
+        <file>resources/qml/Sensor.qml</file>
+        <file>resources/qml/Chart.qml</file>
+        <file>resources/images/spinner2.gif</file>
     </qresource>
 </RCC>

@@ -52,6 +52,11 @@ void Controller::serviceConnect()
     }
 }
 
+void Controller::sendCommand(const QByteArray &newValue)
+{
+    service->writeCharacteristic(service->characteristic(QBluetoothUuid(static_cast<uint>(HC08_CHARACTERICTIC_UUID))), newValue);
+}
+
 void Controller::bleServiceDiscovered(const QBluetoothUuid &gatt)
 {
     services.append(gatt);

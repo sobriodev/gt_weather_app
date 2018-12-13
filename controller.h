@@ -18,6 +18,7 @@ public:
 
     Q_INVOKABLE void deviceConnect(Device *device);
     Q_INVOKABLE void serviceConnect();
+    Q_INVOKABLE void sendCommand(const QByteArray &newValue);
 
 public slots:
     void bleServiceDiscovered(const QBluetoothUuid &gatt);

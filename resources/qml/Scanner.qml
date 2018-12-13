@@ -132,13 +132,12 @@ Page {
         id: spinner
         visible: false
         anchors.centerIn: parent
-        width: 50
-        height: 50
+        width: 150
+        height: 150
         color: Qt.rgba(0,0,0,0)
-        Image {
-            source: "../images/spinner.png"
+        AnimatedImage {
+            source: "../images/spinner2.gif"
             anchors.fill: parent
-            NumberAnimation on rotation { duration: 1500; from:0; to: 360; loops: Animation.Infinite}
         }
     }
 
